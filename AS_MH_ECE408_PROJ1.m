@@ -18,8 +18,10 @@ maxBitErrors = 100;    % Maximum number of bit errors
 maxNumBits = 1e7;      % Maximum number of bits transmitted
 
 
-%set modulator and demodulator
+%set convolutional encoder 
+hConEnc = comm.ConvolutionalEncoder;
 
+%set modulator and demodulator
 hQPSKMod = comm.QPSKModulator('BitInput',true);
 hQPSKDemod = comm.QPSKDemodulator('BitOutput',true);
 
