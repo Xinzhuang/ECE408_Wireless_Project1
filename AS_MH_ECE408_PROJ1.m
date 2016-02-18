@@ -16,3 +16,12 @@ numSC = 52;           % Number of OFDM subcarriers  (standard -> 52)
 cpLen = 16;            % OFDM cyclic prefix length
 maxBitErrors = 100;    % Maximum number of bit errors
 maxNumBits = 1e7;      % Maximum number of bits transmitted
+
+
+%set modulator and demodulator
+
+hQPSKMod = comm.QPSKModulator('BitInput',true);
+hQPSKDemod = comm.QPSKDemodulator('BitOutput',true);
+
+hOFDMmod = comm.OFDMModulator('FFTLength',numSC,'CyclicPrefixLength',cpLen);
+hOFDMdemod = comm.OFDMDemodulator('FFTLength',numSC,'CyclicPrefixLength',cpLen);
