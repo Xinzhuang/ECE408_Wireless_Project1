@@ -21,6 +21,9 @@ maxNumBits = 1e7;      % Maximum number of bits transmitted
 
 %set convolutional encoder 
 %hConEnc = comm.ConvolutionalEncoder;
+% see link below for more info on convolutional encoding
+% http://www.mathworks.com/help/comm/ref/comm.convolutionalencoder-class.html
+
 
 %set modulator and demodulator
 hQPSKMod = comm.QPSKModulator('BitInput',true);
