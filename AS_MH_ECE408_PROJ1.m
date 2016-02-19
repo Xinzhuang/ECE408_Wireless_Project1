@@ -10,6 +10,7 @@ Prof. Keene
 
 %% SIMULATION PARAMETERS ( source: Mathworks  ) 
 
+% See 17.3.2.3 Timing related parameters in 802.11a standard doc
 %http://www.mathworks.com/help/comm/gs/qpsk-and-ofdm-with-matlab-system-objects-1.html
 M = 4;                 % Modulation Order
 k = log2(M);           % # of bits per symbol
