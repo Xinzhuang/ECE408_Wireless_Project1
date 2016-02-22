@@ -11,17 +11,19 @@ Prof. Keene
 %% SIMULATION PARAMETERS ( source: Mathworks  ) 
 clear all;
 % See 17.3.2.2-3 Timing & rate-related parameters in 802.11a standard doc
-% We implement 12 Mbits/s (QPSK, rate 1/2 code), and 6 Mbits/s (BPSK,
-% rate 1/2 code)
+% We implement 12 Mbits/s (QPSK, rate 1/2 code), and 6 Mbits/s (BPSK, rate
+% 1/2 code) Note: selected because there's no (easy) way to calculate the
+% theory curve for higher order modulations with FEC, AFAIK (at least, it
+% can't be done with bercoding()).
 
 % http://www.wardriving.ch/hpneu/info/doku/802.11a-1999.pdf
-%http://www.mathworks.com/help/comm/gs/qpsk-and-ofdm-with-matlab-system-objects-1.html
+% http://www.mathworks.com/help/comm/gs/qpsk-and-ofdm-with-matlab-system-objects-1.html
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Common Stuff   %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-numSC = 52;           % Number of OFDM subcarriers  (standard -> 52 (table 79, 17.3.2.3)
+numSC = 52;            % Number of OFDM subcarriers  (standard -> 52 (table 79, 17.3.2.3)
 cpLen = 16;            % OFDM cyclic prefix length
 maxBitErrors = 100;    % Maximum number of bit errors
 maxNumBits = 1e5;      % Maximum number of bits transmitted
@@ -30,7 +32,7 @@ hConEnc = comm.ConvolutionalEncoder;
 hDec = comm.ViterbiDecoder('InputFormat','Hard');
 delay = hDec.TracebackDepth*...
                     log2(hDec.TrellisStructure.numInputSymbols);
-hError = comm.ErrorRate('ComputationDelay',0,'ReceiveDelay',delay,'ResetInputPort', true);
+hError = comm.ErrorRate('ReceiveDelay',delay,'ResetInputPort', true);
 codeRate = hDec.TrellisStructure.numInputSymbols / hDec.TrellisStructure.numOutputSymbols;
 % see link below for more info on convolutional encoding
 % http://www.mathworks.com/help/comm/ref/comm.convolutionalencoder-class.html
