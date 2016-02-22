@@ -24,7 +24,7 @@ clear all;
 numSC = 52;           % Number of OFDM subcarriers  (standard -> 52 (table 79, 17.3.2.3)
 cpLen = 16;            % OFDM cyclic prefix length
 maxBitErrors = 100;    % Maximum number of bit errors
-maxNumBits = 1e6;      % Maximum number of bits transmitted
+maxNumBits = 1e5;      % Maximum number of bits transmitted
 
 hConEnc = comm.ConvolutionalEncoder;
 hDec = comm.ViterbiDecoder('InputFormat','Hard');
@@ -65,6 +65,8 @@ berVec = zeros(length(EbNoVec),3);
 parfor m = 1:length(EbNoVec)
     snr = snrVec(m);
     errorStats = zeros(1,3);
+    dataIn = zeros(frameSize);
+    dataOut = zeros(frameSize);
     while errorStats(2) <= maxBitErrors && errorStats(3) <= maxNumBits
         dataIn = randi([0,1],frameSize);              % Generate binary data
         dataECC = step(hConEnc, dataIn);              % Apply Convolutional Code
@@ -113,14 +115,14 @@ hBPSKDemod = comm.BPSKDemodulator;
 % if configured correctly, size should be 24 (17.3.2.2, table 78).
 frameSize = [k*numDC*codeRate 1];
 
-EbNoVec = (-2:.5:3)';
 snrVec = EbNoVec + 10*log10(k) + 10*log10(numDC/numSC);
-
 berVec = zeros(length(EbNoVec),3);
 
 parfor m = 1:length(EbNoVec)
     snr = snrVec(m);
     errorStats = zeros(1,3);
+    dataIn = zeros(frameSize);
+    dataOut = zeros(frameSize);
     while errorStats(2) <= maxBitErrors && errorStats(3) <= maxNumBits
         dataIn = randi([0,1],frameSize);              % Generate binary data
         dataECC = step(hConEnc, dataIn);              % Apply Convolutional Code
